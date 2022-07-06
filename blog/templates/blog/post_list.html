@@ -2,10 +2,9 @@
 {% load static %}
 {% block content %}
 
-<div class="container container-fluid" style="background-color:lavender">
-    <div class="row">
+<!-- <div class="container container-fluid" style="background-color:lavender">
+    <div class="row offset-3">
       <div class="col-lg-6">
-       <img  style="height: 70vh; width:90%" src="{% static 'images/images.jpg'%}" alt="image">
       </div>
 
       <div class="col-lg-6">
@@ -26,6 +25,37 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+
+
+
+
+
+
+  <div class="banner-image w-90 vh-60 d-flex justify-content-center align-items-center">
+      <div class="content text-center">
+        <img style="height: 60vh; width:90%; text-align:center;" src="{% static 'images/postlist.jpg'%}" alt="image">
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    
+    <div class="container my-5 d-grid gap-5">
+      <div class="p-5 border">
+        <p>
+          {% for post in post_list %}
+                <div>
+        
+                    <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+                    <div class="date">
+                        <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+                    </div>
+                    <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a>
+                </div>
+            {% endfor %}
+        </p>
+      </div>
+    </div>
 
 {% endblock content %}
