@@ -13,7 +13,8 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   padding: 2rem;
-  color: cornflowerblue;
+  color:burlywood;
+
 }
 
 .inpost {
@@ -24,20 +25,18 @@ body {
 .banner-img {
   height: 100vh;
 
-  background-image: url("../images/colabs-bg.jpg");
+  background-image: url("../images/new-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
 
 }
-
 .nav-item {
+  
   margin: 1rem;
-  color: lightgray;
-  font-size: 1.5rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  
+ 
 }
 
 .grid {
@@ -53,12 +52,17 @@ a:hover {
 }
 
 .nav-link {
-
-  font-size: 1.2rem;
-
+  
+  color:white;
+  font-weight:500;
+  
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: silver;
+  font-size:1.2rem;
+  padding: 2%;
 
+}
+.nav-link-index{
+  color:indianred;
 }
 
 .techfont {
@@ -112,6 +116,7 @@ a:hover {
 }
 
 .white-section {
+  margin-top: 6%;
   background-color: bisque;
   padding: 0%;
   text-align: center;

@@ -19,7 +19,7 @@ class IndexView(TemplateView):
     template_name="blog/index.html"
     def get(self,request):
         # student=Post.objects.all()
-        last_ten = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')[:6]
+        last_ten = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:6]
         return render(request,'blog/index.html',{"student":last_ten})
     
 class RedirectToHome(RedirectView):

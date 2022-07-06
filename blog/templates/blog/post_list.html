@@ -5,7 +5,7 @@
 <div class="container container-fluid" style="background-color:lavender">
     <div class="row">
       <div class="col-lg-6">
-       <img  style="height: 70vh; width:90%" src="{% static 'images/Inpost.jpg'%}" alt="image">
+       <img  style="height: 70vh; width:90%" src="{% static 'images/images.jpg'%}" alt="image">
       </div>
 
       <div class="col-lg-6">
@@ -14,7 +14,7 @@
 
 
             {% for post in post_list %}
-                <div class="post">
+                <div>
         
                     <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
                     <div class="date">
