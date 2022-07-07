@@ -14,7 +14,7 @@
             <a class="btn btn-warning" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %}
 
-      <p class='postcontent' style="border: 2px solid gray; text-align:center;" >{{ post.text|safe|linebreaksbr }}</p>
+      <p class=' text-center alert alert-info ' style="border: 2px solid gray; text-align:center;" >{{ post.text|safe|linebreaksbr }}</p>
 
 
       {% if user.is_authenticated %}

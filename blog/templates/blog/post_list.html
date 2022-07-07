@@ -16,12 +16,12 @@
     <!-- Main Content Area -->
     
     <div class="container my-5 d-grid gap-5">
-      <div class="p-5 border">
+      <div class="p-5 border  alert alert-info ">
         <p>
           {% for post in post_list %}
-                <div>
+                <div class="alert alert-success">
         
-                    <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+                    <h3><a  href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
                     <div class="date">
                         <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
                     </div>
