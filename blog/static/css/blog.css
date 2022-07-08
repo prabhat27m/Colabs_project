@@ -24,13 +24,18 @@ body {
 
 .banner-img {
   height: 100vh;
-
   background-image: url("../images/new-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
 
+}
+
+@media (max-width :768px){
+  .banner-img{
+    min-height: 30vh;
+  }
 }
 .nav-item {
   
