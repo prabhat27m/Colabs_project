@@ -1,12 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
-# SuperUserInformation
-# User: Jose
-# Email: training@pieriandata.com
-# Password: testpassword
 
 # Create your models here.
+# Post is inheriting from auth.User as foreign key to get access of Users
 class Post(models.Model):
     author = models.ForeignKey('auth.User',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -21,13 +18,15 @@ class Post(models.Model):
     def approve_comments(self):
         return self.comments.filter(approved_comment=True)
 
+    # after new post submission where to send
     def get_absolute_url(self):
         return reverse("post_detail",kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.title
 
-
+# Comment model is inheriting from Post model
+# Comment can access the attributes (mainly pk when edited)
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments',on_delete=models.CASCADE)
     author = models.CharField(max_length=200)

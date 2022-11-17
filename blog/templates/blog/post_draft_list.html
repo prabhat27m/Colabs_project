@@ -2,12 +2,16 @@
 
 {% block content %}
     {% for post in draft %}
-        <div class="post content  text-center alert alert-info " >
-            <p style="margin:2%"class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
-            <h3><a class="alert alert-light " href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
-            <p class="alert alert-warning"style="margin:2%">{{ post.text|truncatechars:200 }}</p>
-            <hr>
-        </div>
+
+            {%  if request.user == post.author  %}
+            <div class="post content  text-center alert alert-info " >
+                <p style="margin:2%"class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+                <h3><a class="alert alert-light " href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+                <p class="alert alert-warning"style="margin:2%">{{ post.text|truncatechars:200 }}</p>
+                <hr>
+            </div>
+            {% endif %}
+                
     {% endfor %}
 {% endblock %}
 

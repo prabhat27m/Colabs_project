@@ -1,6 +1,13 @@
+import imp
+from urllib import request
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views import View
+
+from django.contrib.auth.models import User
+from django.urls import reverse
 from .models import Post, Comment,Contact
 from .forms import PostForm, CommentForm,ContactForm
 from django.views.generic import (TemplateView,ListView,
@@ -33,6 +40,16 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    # context_object_name=post
+    
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['current_user']=Post.objects.get(author=User.username)
+    #     return context
+    
+    # def get_queryset(self):
+    #     return User.objects.get(author=User.username)
 
 
 class CreatePostView(LoginRequiredMixin,CreateView):
@@ -40,14 +57,33 @@ class CreatePostView(LoginRequiredMixin,CreateView):
     redirect_field_name = 'blog/post_detail.html'
 
     form_class = PostForm
-
+    
     model = Post
+    def post(self,request):
+        form = PostForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            
+        return  HttpResponseRedirect(reverse('post_detail',kwargs={'pk':post.pk}))
+        
+    def get(self,request):
+        form=PostForm()
+        return render(request,'blog/post_form.html',{"form":form})
+        
+
+        
+            
+   
+   
+   #post form using form api
 
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/login/'
     redirect_field_name = 'blog/post_detail.html'
-
+    #using default template name
     form_class = PostForm
 
     model = Post
@@ -65,7 +101,7 @@ class DraftListView(LoginRequiredMixin,ListView):
     model = Post
 
     def get_queryset(self):
-        return Post.objects.filter(published_date__isnull=True).order_by('created_date')
+        return Post.objects.filter(published_date__isnull=True).order_by('-created_date')
     
     
     
@@ -96,6 +132,7 @@ def post_publish(request, pk):
 @login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    # post =Post.objects.get(pk=pk)
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -107,9 +144,10 @@ def add_comment_to_post(request, pk):
         form = CommentForm()
         return render(request, 'blog/comment_form.html', {'form': form})
 
-
+# pk passed from url
 @login_required
 def comment_approve(request, pk):
+    #get request of the instance of the model
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
@@ -118,6 +156,8 @@ def comment_approve(request, pk):
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
+    # comment = Comment.objects.get(pk=pk)
     post_pk = comment.post.pk
+    # we are using comment 
     comment.delete()
     return redirect('post_detail', pk=post_pk)
